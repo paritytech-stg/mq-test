@@ -17,13 +17,12 @@ permissions: {}
 jobs:
   set-runner:
     runs-on: ubuntu-latest
-
     steps:
       - name: set runner
         id: set-runner
         run: |
           echo "hello world"
-          echo "RUNNER=arc-runners-default-stg" >> $GITHUB_ENV
+          echo "RUNNER=arc-runners-default-stg" >> $GITHUB_OUTPUT
 
   test-job:
     needs: [set-runner]
