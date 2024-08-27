@@ -16,8 +16,7 @@ permissions: {}
 
 jobs:
   test-job:
-    runs-on: ubuntu-latest
+    runs-on: arc-runners-default-stg
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          echo "hello world"
+      - run: sleep 60
