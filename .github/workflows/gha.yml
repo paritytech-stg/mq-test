@@ -31,7 +31,6 @@ jobs:
           else
             echo "RUNNER=arc-runners-default-stg" >> $GITHUB_OUTPUT
           fi
-          env
 
   test-job:
     needs: [set-runner]
