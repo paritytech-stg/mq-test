@@ -6,6 +6,7 @@ on:
       - main
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review, labeled]
+  merge_group:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -14,13 +15,31 @@ concurrency:
 permissions: {}
 
 jobs:
+  set-runner:
+    runs-on: ubuntu-latest
+    outputs:
+      RUNNER: ${{ steps.set-runner.outputs.RUNNER }}
+    steps:
+      - name: set runner
+        id: set-runner
+        run: |
+          echo "hello world"
+          echo "RUNNER=arc-runners-default-stg" >> $GITHUB_OUTPUT
+          # Run merge queues on persistent runners
+          if [[ $GITHUB_REF_NAME == *"gh-readonly-queue"* ]]; then
+            echo "RUNNER=ubuntu-latest" >> $GITHUB_OUTPUT
+          else
+            echo "RUNNER=arc-runners-default-stg" >> $GITHUB_OUTPUT
+          fi
+
   test-job:
-    runs-on: arc-runners-default-stg
+    needs: [set-runner]
+    runs-on: ${{ needs.set-runner.outputs.RUNNER }}
     steps:
       - uses: actions/checkout@v4
-      - run: sleep 60
+      - run: sleep 10
   test-job2:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: sleep 120
+      - run: sleep 10
