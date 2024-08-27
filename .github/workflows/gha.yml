@@ -17,6 +17,8 @@ permissions: {}
 jobs:
   set-runner:
     runs-on: ubuntu-latest
+    outputs:
+      RUNNER: ${{ steps.set-runner.outputs.RUNNER }}
     steps:
       - name: set runner
         id: set-runner
