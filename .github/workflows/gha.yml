@@ -25,6 +25,7 @@ jobs:
         run: |
           echo "hello world"
           echo "RUNNER=arc-runners-default-stg" >> $GITHUB_OUTPUT
+          env
 
   test-job:
     needs: [set-runner]
@@ -36,4 +37,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: sleep 120
+      - run: sleep 10
